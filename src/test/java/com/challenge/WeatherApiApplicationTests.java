@@ -6,10 +6,13 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.kafka.clients.producer.Producer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.challenge.domain.Location;
@@ -20,6 +23,7 @@ import com.challenge.service.PublishService;
 import com.challenge.service.PublishServiceImpl;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class WeatherApiApplicationTests {
 
 	@Mock
@@ -27,12 +31,12 @@ public class WeatherApiApplicationTests {
 	
 	private LocationService locationService;
 	
+	@Autowired
 	private PublishService publishService;	
 	
     @Before
     public void setUp() {
     	locationService = new LocationServiceImpl(repository);
-    	publishService = new PublishServiceImpl();
     	
     	when(repository.findAll()).thenReturn(Arrays.asList(
 				new Location(1L),
