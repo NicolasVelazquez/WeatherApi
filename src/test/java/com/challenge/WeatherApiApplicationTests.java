@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.kafka.clients.producer.Producer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,6 @@ import com.challenge.domain.LocationRepository;
 import com.challenge.service.LocationService;
 import com.challenge.service.LocationServiceImpl;
 import com.challenge.service.PublishService;
-import com.challenge.service.PublishServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,13 +41,6 @@ public class WeatherApiApplicationTests {
 				new Location(2L),
 				new Location(3L)));
     }
-
-//	@Test
-//	public void getLocations_shouldRetrieveLocations() {
-//	
-//		List<Location> locations = locationService.findAll();
-//		assertEquals(false, locations.isEmpty());
-//	}
 	
 	@Test
 	public void getLocationsAndPublish() {

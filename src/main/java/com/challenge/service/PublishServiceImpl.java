@@ -9,6 +9,7 @@ import org.apache.kafka.common.errors.AuthorizationException;
 import org.apache.kafka.common.errors.OutOfOrderSequenceException;
 import org.apache.kafka.common.errors.ProducerFencedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.challenge.domain.Location;
@@ -16,10 +17,11 @@ import com.challenge.domain.Location;
 @Service
 public class PublishServiceImpl implements PublishService {
 
+	@Value("${kafka.topic}")
+	private String topic;
+	
 	@Autowired
 	private Producer<String, String> kafkaProducer;
-	
-	private PublishService p;
 	
 	@Override
 	public boolean publishLocations(List<Location> locations) {
@@ -31,7 +33,7 @@ public class PublishServiceImpl implements PublishService {
 		 try {
 		     kafkaProducer.beginTransaction();
 		     locations.forEach(x -> kafkaProducer.send(
-		    		 new ProducerRecord<>("my-topic", x.toString()), (metadata, e) -> {
+		    		 new ProducerRecord<>(topic, x.toString()), (metadata, e) -> {
 		                     if(e != null) {
 		                        e.printStackTrace();
 		                     } else {
